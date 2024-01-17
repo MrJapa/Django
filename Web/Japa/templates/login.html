@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block login %}
+<div class="d-flex justify-content-center align-items-center" style="margin-top: 10%;">
+    <div class="card shadow-lg" style="width: 40%; border-radius: .5rem; background-color: #1b1d20;">
+        <div class="shadow">
+            <p class="text-center fs-2 fw-bold" style="color: #ffffff;">Login</p>
+        </div>
+        <form method= "post" class="justify-content-center" style="padding: 2rem;">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="InputUsername" class="form-label" style="color: #ffffff;">Username</label>
+                <input type="username" name="username" class="form-control" id="InputUsername" aria-describedby="usernameHelp">
+                <div id="usernameHelp" class="form-text">We'll never share your information with anyone else.</div>
+            </div>
+            <div class="mb-3">
+                <label for="InputPassword" class="form-label" style="color: #ffffff;">Password</label>
+                <input type="password" name="password" class="form-control" id="InputPassword">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="Check" name="remember_me">
+                <label class="form-check-label" for="Check" style="color: #ffffff;">Remember me</label>
+            </div>
+            <button type="submit" class="btn btn-outline-success">Login</button>
+            <a type="button" class="btn btn-outline-success" style="float: right;" href="{% url 'signup' %}">Sign up</a>
+        </form>
+        {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-warning" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+    </div>
+</div>
+{% endblock %}
