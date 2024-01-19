@@ -3,41 +3,60 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from datetime import timedelta
+from .models import CustomUser
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'index.html', {'user': request.user})
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
+        email = request.POST.get('email')
         password = request.POST.get('password')
         remember_me = request.POST.get('remember_me')
-        user = authenticate(request, username=username, password=password)
+
+        user = authenticate(request, username=email, password=password)
 
         if user is not None:
             login(request, user)
 
             if remember_me:
-                # Set session expiry time to a longer duration (e.g., 2 weeks)
                 request.session.set_expiry(timedelta(days=14))
             else:
-                # Session expires at browser close
                 request.session.set_expiry(0)
 
-            return redirect('index')
+            return redirect('index')  # Adjust as per your index/home view
         else:
-            messages.error(request, "Invalid username or password.")
+            messages.error(request, "Invalid email or password.")
 
     return render(request, 'login.html')
 
 def signup_view(request):
     if request.method == 'POST':
-        username = request.POST['username']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
         email = request.POST['email']
         password = request.POST['password']
+        phone_number = request.POST['phone_number']
+        address = request.POST['address']
+        address_type = request.POST['address_type']
+        door_number = request.POST['door_number']
+
         # Add validation logic here
-        User.objects.create_user(username=username, email=email, password=password)
+
+        # Creating a new user instance
+        user = CustomUser.objects.create_user(
+            email=email,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+            phone_number=phone_number,
+            address=address,
+            address_type=address_type,
+            door_number=door_number
+        )
+        user.save()
+
         messages.success(request, 'Account created successfully')
         return redirect('login')  # Redirect to login page after signup
     return render(request, 'signup.html')

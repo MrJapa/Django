@@ -25,8 +25,11 @@ SECRET_KEY = 'django-insecure-o@vm&&v8i8rgmu%(tegdqr5tq6l)rmt^7nip@_l_e%at75s8mi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.0.0.21', 'localhost', '127.0.0.1', '0.0.0.0']
+ALLOWED_HOSTS = ['10.0.0.21', 'localhost', '127.0.0.1', '0.0.0.0', '*']
 
+AUTH_USER_MODEL = 'Japa.CustomUser'
+
+AUTHENTICATION_BACKENDS = ['Japa.backends.EmailBackend']
 
 # Application definition
 
@@ -123,6 +126,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-AUTHENTICATION_BACKENDS = ['Japa.backends.EmailOrUsernameModelBackend']

@@ -6,12 +6,12 @@
         <div class="shadow">
             <p class="text-center fs-2 fw-bold" style="color: #ffffff;">Login</p>
         </div>
-        <form method= "post" class="justify-content-center" style="padding: 2rem;">
+        <form method="post" class="justify-content-center" style="padding: 2rem;">
             {% csrf_token %}
             <div class="mb-3">
-                <label for="InputUsername" class="form-label" style="color: #ffffff;">Username</label>
-                <input type="username" name="username" class="form-control" id="InputUsername" aria-describedby="usernameHelp">
-                <div id="usernameHelp" class="form-text">We'll never share your information with anyone else.</div>
+                <label for="InputEmail" class="form-label" style="color: #ffffff;">Email</label>
+                <input type="email" name="email" class="form-control" id="InputEmail" aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
             </div>
             <div class="mb-3">
                 <label for="InputPassword" class="form-label" style="color: #ffffff;">Password</label>
@@ -25,12 +25,12 @@
             <a type="button" class="btn btn-outline-success" style="float: right;" href="{% url 'signup' %}">Sign up</a>
         </form>
         {% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-warning" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endif %}
+            {% for message in messages %}
+                <div class="alert alert-warning" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
 </div>
 {% endblock %}
