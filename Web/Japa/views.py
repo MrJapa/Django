@@ -2,12 +2,17 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout
 from datetime import timedelta
 from .models import CustomUser
 
 # Create your views here.
 def index(request):
     return render(request, 'index.html', {'user': request.user})
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')
 
 def login_view(request):
     if request.method == 'POST':
