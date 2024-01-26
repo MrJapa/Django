@@ -5,14 +5,28 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from datetime import timedelta
 from .models import CustomUser
+from .forms import NewRestaurantForm
+from .models import NewRestaurant
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html', {'user': request.user})
+    restaurants = NewRestaurant.objects.all()
+    return render(request, 'index.html', {'user': request.user, 'restaurants': restaurants})
 
 def logout_view(request):
     logout(request)
     return redirect('index')
+
+def manage_view(request):
+    if request.method == 'POST':
+        form = NewRestaurantForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('manage')
+    else:
+        form = NewRestaurantForm()
+
+    return render(request, 'manage.html', {'form': form})
 
 def login_view(request):
     if request.method == 'POST':

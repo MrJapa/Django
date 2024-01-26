@@ -23,3 +23,7 @@ li {
 .icon::before {
     margin-right: 5px;
 }
+
+.icons::before {
+    margin-right: -5px;
+}

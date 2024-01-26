@@ -1,12 +1,41 @@
 {% extends 'base.html' %}
-{% block title %}Burro{% endblock %}
-
-{% block userinfo %}
-{% if user.is_authenticated %}
-  {% if user.is_superuser %}
-    <p>You are a superuser.</p>
-  {% else %}
-    <p>You are not a superuser.</p>
-  {% endif %}
-{% endif %}
+{% load division %}
+{% block title %}Home{% endblock %}
+{% block album %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for restaurant in restaurants %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img class="bd-placeholder-img card-img-top" width="100%" height="225"
+                        src="data:image/jpeg;base64,{{ restaurant.get_image }}" alt="{{ restaurant.name }}">
+                    <div class="card-body">
+                        <div class="d-flex" style="justify-content: space-between;">
+                            <h4>{{ restaurant.name }}</h4>
+                            <button type="button" class="btn btn-primary" style="align-items: end; width: 25%;">
+                                25-30
+                            </button>
+                        </div>
+                        <p style="color: rgb(85, 84, 90);">{{ restaurant.description }}</p>
+                        <div class="dropdown-divider"></div>
+                        <div class="d-flex align-items-center">
+                            <span class="bi-bicycle icon">{{ restaurant.delivery_fee|floatformat }} kr.</span>
+                            <span class="bi-dot icon"></span>
+                            {% for i in "xxxx" %}
+                            {% if forloop.counter <= restaurant.delivery_fee|floatformat|division:15 %} <span
+                                class="bi-currency-dollar" style="font-size: small;"></span>
+                                {% else %}
+                                <span class="bi-currency-dollar"
+                                    style="font-size: small; color: rgba(0, 0, 0, 0.350);"></span>
+                                {% endif %}
+                                {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock %}
