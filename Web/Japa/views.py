@@ -5,8 +5,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from datetime import timedelta
 from .models import CustomUser
-from .forms import NewRestaurantForm
-from .models import NewRestaurant
+from .forms import *
+from .models import *
 
 # Create your views here.
 def index(request):
@@ -18,15 +18,23 @@ def logout_view(request):
     return redirect('index')
 
 def manage_view(request):
-    if request.method == 'POST':
-        form = NewRestaurantForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('manage')
-    else:
-        form = NewRestaurantForm()
+    # Initialize the forms outside of the if statement
+    restaurant_form = NewRestaurantForm()
+    category_form = NewCategoryForm()
 
-    return render(request, 'manage.html', {'form': form})
+    if request.method == 'POST':
+        if 'restaurant_form' in request.POST:
+            restaurant_form = NewRestaurantForm(request.POST, request.FILES)
+            if restaurant_form.is_valid():
+                restaurant_form.save()
+                return redirect('manage')
+        elif 'category_form' in request.POST:
+            category_form = NewCategoryForm(request.POST, request.FILES)
+            if category_form.is_valid():
+                category_form.save()
+                return redirect('manage')
+
+    return render(request, 'manage.html', {'restaurant_form': restaurant_form, 'category_form': category_form})
 
 def login_view(request):
     if request.method == 'POST':

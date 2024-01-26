@@ -79,3 +79,17 @@ class NewRestaurant(models.Model):
         else:
             return None
     
+
+class NewCategory(models.Model):
+    name = models.CharField(max_length=50)
+    image = models.BinaryField(blank=True, null=True)
+
+    def set_image(self, image):
+        binary_data = image.read()
+        self.image = binary_data
+    
+    def get_image(self):
+        if self.image:
+            return base64.b64encode(self.image).decode()
+        else:
+            return None
