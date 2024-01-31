@@ -2,12 +2,9 @@
 {% block title %} Burro - {{ restaurant.name }} {% endblock %}
 
 {% block header %}
-<body class="restaurant-detail navbartop">
-    <div class="d-flex container- mx-0">
-        <img class="bd-placeholder-img-top" width="100%" height="200px"
-                                src="data:image/jpeg;base64,{{ restaurant.get_image }}" alt="{{ restaurant.name }}"
-                                style="object-fit: cover;">
-        </img>
-    </div>
-</body>
+<div class="d-flex container-fluid">
+    <img class="bd-placeholder-img-top" width="100%" height="200px"
+        src="data:image/jpeg;base64,{{ restaurant.get_image }}" alt="{{ restaurant.name }}" style="object-fit: cover;">
+    </img>
+</div>
 {% endblock %}
