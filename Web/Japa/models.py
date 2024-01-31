@@ -38,48 +38,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
-class FoodType(models.Model):
-    food_type = models.CharField(max_length=20, choices=[
-        ('burger', 'Burger'),
-        ('kebab', 'Kebab'),
-        ('pizza', 'Pizza'),
-        ('salat', 'Salat'),
-        ('asiatisk', 'Asiatisk'),
-        ('japansk', 'Japansk'),
-        ('kinesisk', 'Kinesisk'),
-        ('mexicansk', 'Mexicansk'),
-        ('thai', 'Thai'),
-        ('middelhavskøkken', 'Middelhavskøkken'),
-        ('sandwich', 'Sandwich'),
-        ('sushi', 'Sushi'),
-        ('andet', 'Andet')
-        ])
-    
-    def __str__(self):
-        return self.food_type
-
-class NewRestaurant(models.Model):
-    name = models.CharField(max_length=50)
-    address = models.CharField(max_length=50)
-    description = models.CharField(max_length=50, default='Mad')
-    opening_time = models.TimeField()
-    closing_time = models.TimeField()
-    delivery_fee = models.FloatField()
-    minimum_order = models.FloatField()
-    FoodType = models.ManyToManyField('FoodType', related_name='FoodType')
-    image = models.BinaryField(blank=True, null=True)
-
-    def set_image(self, image):
-        binary_data = image.read()
-        self.image = binary_data
-
-    def get_image(self):
-        if self.image:
-            return base64.b64encode(self.image).decode()
-        else:
-            return None
-    
-
 class NewCategory(models.Model):
     name = models.CharField(max_length=50)
     image = models.BinaryField(blank=True, null=True)
@@ -93,3 +51,31 @@ class NewCategory(models.Model):
             return base64.b64encode(self.image).decode()
         else:
             return None
+    
+    def __str__(self):
+        return self.name
+
+class NewRestaurant(models.Model):
+    name = models.CharField(max_length=50)
+    address = models.CharField(max_length=50)
+    description = models.CharField(max_length=50)
+    opening_time = models.TimeField()
+    closing_time = models.TimeField()
+    delivery_fee = models.FloatField()
+    minimum_order = models.FloatField()
+    categories = models.ManyToManyField(NewCategory)
+    image = models.BinaryField(blank=True, null=True)
+
+    def set_image(self, image):
+        binary_data = image.read()
+        self.image = binary_data
+
+    def get_image(self):
+        if self.image:
+            return base64.b64encode(self.image).decode()
+        else:
+            return None
+        
+    def __str__(self):
+        return self.name
+    

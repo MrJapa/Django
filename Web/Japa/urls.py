@@ -10,4 +10,5 @@ urlpatterns = [
     path('success/', views.success_view, name='success'),
     path('logout/', logout_view, name='logout'),
     path('manage/', views.manage_view, name='manage'),
+    path('Restaurant/<str:name>/', views.restaurant_detail, name='restaurant_detail'),
 ]

@@ -1,3 +1,11 @@
+body {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+h4 {
+    font-family: 'Roboto', sans-serif !important;
+}
+
 .btn-outline-success{
     color: #22D6B4 !important;
     border-color: #22D6B4;
@@ -26,4 +34,19 @@ li {
 
 .icons::before {
     margin-right: -5px;
+}
+
+.card:hover {
+    transform: scale(1.05) !important;
+    box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+
+.menucard {
+    text-decoration: none !important; /* Removes the underline */
+    color: inherit !important; /* Makes the link color the same as the surrounding text */
+}
+
+.menucard a:hover {
+    text-decoration: none !important; /* Removes the underline on hover */
+    color: inherit !important; /* Keeps the link color the same on hover */
 }

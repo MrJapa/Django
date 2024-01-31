@@ -1,43 +1,91 @@
 {% extends 'base.html' %}
 {% load division %}
 {% block title %}Home{% endblock %}
-{% block album %}
-<div class="album py-5 bg-body-tertiary">
-    <div class="d-flex container-fluid">
-        <div class="row justify-content-start row-cols-1 row-cols-sm-2 row-cols-md-4 g-3" style="margin: 0 10rem;">
-            {% for restaurant in restaurants %}
-            <div class="col">
-                <div class="card shadow-sm" style="border-radius: 5%; overflow: hidden;">
-                    <img class="bd-placeholder-img card-img-top" width="100%" height="200px"
-                        src="data:image/jpeg;base64,{{ restaurant.get_image }}" alt="{{ restaurant.name }}" style="object-fit: cover;">
-                    <div class="card-body">
-                        <div class="m-0">
-                            <div class="row m-0 g-0">
-                                <div class="col-10">
-                                    <h4 style="overflow-wrap: break-word;">{{ restaurant.name }}</h4>
-                                    <p style="color: rgb(85, 84, 90);">{{ restaurant.description }}</p>
-                                </div>
-                                <div class="col rounded m-0" style="background-color: #EBF7FD; height: fit-content; width: 25px;">
-                                    <p class="text-center m-0" style="color: #00A8E7; font-weight: 450;">10-15</p>
-                                    <p class="text-center m-0" style="color: #00A8E7; font-weight:400;">min</p>
-                                </div>
+
+{% block indexNavbar %}
+<div class="d-flex container-fluid justify-content-around">
+    <div class="justify-content-center mt-5">
+        <button class="btn btn-primary rounded-pill" style="background-color: #009DE0; border-color: #ffff;"><span
+                class="bi-globe-americas">&nbsp;&nbsp;Udforsk</span></button>
+        <button class="btn btn-outline-secondary rounded-pill" style="border-color: #ffff;"><span
+                class="">&nbsp;&nbsp;Restauranter</span></button>
+        <button class="btn btn-outline-secondary rounded-pill" style="border-color: #ffff;"><span
+                class="bi-shop-window">&nbsp;&nbsp;Butikker</span></button>
+    </div>
+</div>
+{% endblock %}
+
+{% block categoryblock %}
+<div class="d-flex container-fluid justify-content-center">
+    <div class="row justify-content-start row-cols-1 row-cols-sm-2 row-cols-md-6 g-3">
+        {% for category in categories %}
+        <div class="col" style="width: 250px;">
+            <div class="card shadow-sm" style="border-radius: 5%; overflow: hidden;">
+                <img class="bd-placeholder-img card-img-top" width="100%" height="150px"
+                    src="data:image/jpeg;base64,{{ category.get_image }}" alt="{{ category.name }}"
+                    style="object-fit: cover;">
+                <div class="card-body">
+                    <div class="m-0">
+                        <div class="row m-0 g-0">
+                            <div class="col-10">
+                                <h4 class="text-break">{{ category.name }}</h4>
                             </div>
-                        </div>
-                        <div class="dropdown-divider"></div>
-                        <div class="d-flex align-items-center">
-                            <span class="bi-bicycle icon" style="color: #009DE0; font-weight: 500;">{{ restaurant.delivery_fee|floatformat }} kr.</span>
-                            <span class="bi-dot icon"></span>
-                            {% for i in "xxxx" %}
-                            {% if forloop.counter <= restaurant.delivery_fee|floatformat|division:15 %} <span
-                                class="bi-currency-dollar" style="font-size: small;"></span>
-                                {% else %}
-                                <span class="bi-currency-dollar"
-                                    style="font-size: small; color: rgba(0, 0, 0, 0.350);"></span>
-                                {% endif %}
-                                {% endfor %}
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+
+{% block album %}
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="d-flex container-fluid justify-content-center">
+        <div class="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-5 m-0">
+            {% for restaurant in restaurants %}
+            <div class="col" style="min-width: 300px;">
+                <a class="menucard" href="{% url 'restaurant_detail' name=restaurant.name %}">
+                    <div class="card shadow-sm" style="border-radius: 5%; overflow: hidden;">
+                        <img class="bd-placeholder-img card-img-top" width="100%" height="200px"
+                            src="data:image/jpeg;base64,{{ restaurant.get_image }}" alt="{{ restaurant.name }}"
+                            style="object-fit: cover;">
+                        <div class="card-body">
+                            <div class="m-0">
+                                <div class="row m-0 g-0">
+                                    <div class="col-10">
+                                        <h4 style="overflow-wrap: break-word;">{{ restaurant.name }}</h4>
+                                        <p style="color: rgb(85, 84, 90);">{{ restaurant.description }}</p>
+                                    </div>
+                                    <div class="col rounded m-0"
+                                        style="background-color: #EBF7FD; height: fit-content; width: 35px;">
+                                        <p class="text-center m-0"
+                                            style="color: #00A8E7; font-weight: 450; text-wrap: nowrap;">10-15</p>
+                                        <p class="text-center m-0" style="color: #00A8E7; font-weight:400;">min</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="d-flex align-items-center">
+                                <span class="bi-bicycle icon" style="color: #009DE0; font-weight: 500;">
+                                    {{ restaurant.delivery_fee|floatformat }} kr.</span>
+                                <span class="bi-dot icon"></span>
+                                {% for i in "xxxx" %}
+                                {% if forloop.counter <= restaurant.delivery_fee|floatformat|division:15 %} <span
+                                    class="bi-currency-dollar" style="font-size: small;"></span>
+                                    {% else %}
+                                    <span class="bi-currency-dollar"
+                                        style="font-size: small; color: rgba(0, 0, 0, 0.350);"></span>
+                                    {% endif %}
+                                    {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
             </div>
             {% endfor %}
         </div>

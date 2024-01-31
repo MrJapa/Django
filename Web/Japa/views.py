@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
@@ -11,11 +11,16 @@ from .models import *
 # Create your views here.
 def index(request):
     restaurants = NewRestaurant.objects.all()
-    return render(request, 'index.html', {'user': request.user, 'restaurants': restaurants})
+    categories = NewCategory.objects.all()
+    return render(request, 'index.html', {'user': request.user, 'restaurants': restaurants, 'categories': categories})
 
 def logout_view(request):
     logout(request)
     return redirect('index')
+
+def restaurant_detail(request, name):
+    restaurant = get_object_or_404(NewRestaurant, name=name)
+    return render(request, 'restaurant_detail.html', {'restaurant': restaurant})
 
 def manage_view(request):
     # Initialize the forms outside of the if statement

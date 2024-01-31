@@ -12,6 +12,8 @@
     <script src="{% static 'location.js' %}"></script>
     <link rel="stylesheet" href="{% static 'index.css' %}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+    
 </head>
 
 <body class="bg-light-subtle">
@@ -73,7 +75,13 @@
     {% endblock %}
     {% block management %}
     {% endblock %}
+    {% block indexNavbar %}
+    {% endblock %}
     {% block album %}
+    {% endblock %}
+    {% block categoryblock %}
+    {% endblock %}
+    {% block header %}
     {% endblock %}
 </body>
 
