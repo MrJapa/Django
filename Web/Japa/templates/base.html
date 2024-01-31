@@ -17,59 +17,7 @@
 </head>
 
 <body class="bg-light-subtle">
-    <nav class="navbar navbar-expand-lg navbar-light shadow-lg">
-        <div class="container-fluid">
-            <!-- Left Section -->
-            <div class="d-flex align-items-center col-4">
-                <a class="navbar-brand my-0 pt-0 mt-0" href="{% url 'index'%}">
-                    <img src="{% static 'images/BurroLogo.png' %}" alt="icon" width="150px" />
-                </a>
-                {% if user.is_authenticated %}
-                    <span class="ms-3 bi-house-door-fill icon">&nbsp;&nbsp;{{user.address}}</span>
-                {% else %}
-                    <span id="location" class="ms-3 bi-house-door-fill"></span>
-                {% endif %}
-            </div>
-
-            <!-- Center Section (Search Bar) -->
-            <div class="col-4 justify-content-center d-flex">
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                </form>
-            </div>
-
-            <!-- Right Section -->
-            <div class="col-4 d-flex justify-content-end">
-                {% if user.is_authenticated %}
-                    <div class="nav-item dropdown me-0">
-                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        {{user.first_name}} {{ user.last_name }}
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Profil</a></li>
-                        <li><a class="dropdown-item" href="#">Indstillinger</a></li>
-                        <li>
-                            <hr class="dropdown-divider" />
-                        </li>
-                        {% if user.is_superuser %}
-                            <li><a class="dropdown-item" href="{% url 'manage' %}">Admin</a></li>
-                        {% endif %}
-                        <li>
-                            <a class="dropdown-item" href="{% url 'logout' %}">Log ud</a>
-                        </li>
-                    </ul>
-                    </div>
-                {% else %}
-                    <div class="nav-item">
-                        <a class="btn btn-outline-success" type="button" href="{% url 'login'%}">
-                            Login
-                        </a>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-    </nav>
+    {% include 'components/navbar.html' %}
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
     {% block login %}
     {% endblock %}
@@ -83,7 +31,7 @@
     {% endblock %}
     {% block header %}
     {% endblock %}
-    {% include 'footer.html' %}
+    {% include 'components/footer.html' %}
 </body>
 
 
