@@ -20,12 +20,17 @@ def logout_view(request):
 
 def restaurant_detail(request, name):
     restaurant = get_object_or_404(NewRestaurant, name=name)
-    return render(request, 'restaurant_detail.html', {'restaurant': restaurant})
+    categories = NewCategory.objects.filter(newrestaurant=restaurant)
+
+
+    return render(request, 'restaurant_detail.html', {'restaurant': restaurant, 'categories': categories})
 
 def manage_view(request):
     # Initialize the forms outside of the if statement
     restaurant_form = NewRestaurantForm()
     category_form = NewCategoryForm()
+    food_form = NewFoodForm()
+    undercategory_form = NewUnderCategoryForm()
 
     if request.method == 'POST':
         if 'restaurant_form' in request.POST:
@@ -38,8 +43,18 @@ def manage_view(request):
             if category_form.is_valid():
                 category_form.save()
                 return redirect('manage')
+        elif 'food_form' in request.POST:
+            food_form = NewFoodForm(request.POST, request.FILES)
+            if food_form.is_valid():
+                food_form.save()
+                return redirect('manage')
+        elif 'undercategory_form' in request.POST:
+            undercategory_form = NewUnderCategoryForm(request.POST, request.FILES)
+            if undercategory_form.is_valid():
+                undercategory_form.save()
+                return redirect('manage')
 
-    return render(request, 'manage.html', {'restaurant_form': restaurant_form, 'category_form': category_form})
+    return render(request, 'manage.html', {'restaurant_form': restaurant_form, 'category_form': category_form, 'food_form': food_form, 'undercategory_form': undercategory_form})
 
 def login_view(request):
     if request.method == 'POST':

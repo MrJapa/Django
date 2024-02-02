@@ -1,10 +1,10 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-light shadow-lg">
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm">
     <div class="container-fluid">
         <!-- Left Section -->
         <div class="d-flex align-items-center col-4">
             <a class="navbar-brand my-0 pt-0 mt-0" href="{% url 'index'%}">
-                <img src="{% static 'images/BurroLogo.png' %}" alt="icon" width="150px" />
+                <img src="{% static 'images/logos/Burros.png' %}" alt="icon" width="150px" />
             </a>
             {% if user.is_authenticated %}
                 <span class="ms-3 bi-house-door-fill icon">&nbsp;&nbsp;{{user.address}}</span>

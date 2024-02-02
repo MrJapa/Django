@@ -8,83 +8,17 @@
 </div>
 <div class="container text-center my-5">
     <div class="row flex-auto justify-content-center">
-        <div class="col col-md-auto">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Opret restaurant</h5>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Gå i gang
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col col-md-auto">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Opret kategori</h5>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">
-                        Gå i gang
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col col-md-auto">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Opret bud</h5>
-                    <a href="#" class="btn btn-primary">Gå i gang</a>
-                </div>
-            </div>
-        </div>
-        <div class="col col-md-auto">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Se ordre</h5>
-                    <a href="#" class="btn btn-primary">Gå i gang</a>
-                </div>
-            </div>
-        </div>
+        {% include 'components/manage_card.html' with modal_id="exampleModal" modal_label="exampleModalLabel" modal_title="New Restaurant" form=restaurant_form form_name="restaurant_form" %}
+        {% include 'components/manage_card.html' with modal_id="foodModal" modal_label="foodModalLabel" modal_title="New Food" form=food_form form_name="food_form" %}
+        {% include 'components/manage_card.html' with modal_id="categoryModal" modal_label="categoryModalLabel" modal_title="New Category" form=category_form form_name="category_form" %}
+        {% include 'components/manage_card.html' with modal_id="underCategoryModal" modal_label="underCategoryModalLabel" modal_title="New Undercategory" form=undercategory_form form_name="undercategory_form" %}
     </div>
 </div>
 
-<!-- Modal for Restaurant -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New Restaurant</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ restaurant_form|crispy }}
-                    <button type="submit" name="restaurant_form" class="btn btn-primary">Save</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal for Category -->
-<div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModallLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="categoryModallLabel">New Category</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ category_form|crispy }}
-                    <button type="submit" name="category_form" class="btn btn-primary">Save</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
+{% include 'components/create_modal.html' with modal_id="exampleModal" modal_label="exampleModalLabel" modal_title="New Restaurant" form=restaurant_form form_name="restaurant_form" %}
+{% include 'components/create_modal.html' with modal_id="foodModal" modal_label="foodModalLabel" modal_title="New Food" form=food_form form_name="food_form" %}
+{% include 'components/create_modal.html' with modal_id="categoryModal" modal_label="categoryModalLabel" modal_title="New Category" form=category_form form_name="category_form" %}
+{% include 'components/create_modal.html' with modal_id="underCategoryModal" modal_label="underCategoryModalLabel" modal_title="New Undercategory" form=undercategory_form form_name="undercategory_form" %}
 {% else %}
 <h1>Not Authorized to enter this site</h1>
 {% endif %}

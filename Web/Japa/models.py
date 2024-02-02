@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.core.files.base import ContentFile
+from PIL import Image
 import base64
 
 class CustomUserManager(BaseUserManager):
@@ -76,6 +77,33 @@ class NewRestaurant(models.Model):
         else:
             return None
         
+    def __str__(self):
+        return self.name
+    
+class NewUnderCategory(models.Model):
+    name = models.CharField(max_length=50)
+    category = models.ManyToManyField(NewCategory)
+
+    def __str__(self):
+        return self.name
+    
+class NewFood(models.Model):
+    image = models.BinaryField(blank=True, null=True)
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=50)
+    price = models.FloatField()
+    undercategory = models.ManyToManyField(NewUnderCategory)
+
+    def set_image(self, image):
+            binary_data = image.read()
+            self.image = binary_data
+
+    def get_image(self):
+        if self.image:
+            return base64.b64encode(self.image).decode()
+        else:
+            return None
+
     def __str__(self):
         return self.name
     
