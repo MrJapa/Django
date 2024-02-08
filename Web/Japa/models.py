@@ -39,71 +39,140 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
-class NewCategory(models.Model):
-    name = models.CharField(max_length=50)
-    image = models.BinaryField(blank=True, null=True)
+class NyKategori(models.Model):
+    Navn = models.CharField(max_length=50)
+    Billede = models.BinaryField(blank=True, null=True)
 
     def set_image(self, image):
         binary_data = image.read()
-        self.image = binary_data
+        self.Billede = binary_data
     
     def get_image(self):
-        if self.image:
-            return base64.b64encode(self.image).decode()
+        if self.Billede:
+            return base64.b64encode(self.Billede).decode()
         else:
             return None
     
     def __str__(self):
-        return self.name
-
-class NewRestaurant(models.Model):
-    name = models.CharField(max_length=50)
-    address = models.CharField(max_length=50)
-    description = models.CharField(max_length=50)
-    opening_time = models.TimeField()
-    closing_time = models.TimeField()
-    delivery_fee = models.FloatField()
-    minimum_order = models.FloatField()
-    categories = models.ManyToManyField(NewCategory)
-    image = models.BinaryField(blank=True, null=True)
+        return self.Navn
+    
+class NyRestaurant(models.Model):
+    Navn = models.CharField(max_length=50)
+    Adresse = models.CharField(max_length=50)
+    Beskrivelse = models.CharField(max_length=50)
+    Åbningstid = models.TimeField()
+    Lukketid = models.TimeField()
+    Leveringsgebyr = models.FloatField()
+    Minimumsordre = models.FloatField()
+    Kategorier = models.ManyToManyField(NyKategori)
+    Billede = models.BinaryField(blank=True, null=True)
 
     def set_image(self, image):
         binary_data = image.read()
-        self.image = binary_data
+        self.Billede = binary_data
 
     def get_image(self):
-        if self.image:
-            return base64.b64encode(self.image).decode()
+        if self.Billede:
+            return base64.b64encode(self.Billede).decode()
         else:
             return None
         
     def __str__(self):
-        return self.name
+        return self.Navn
     
-class NewUnderCategory(models.Model):
-    name = models.CharField(max_length=50)
-    category = models.ManyToManyField(NewCategory)
+
+class NyUnderkategori(models.Model):
+    Navn = models.CharField(max_length=50)
+    Restaurant = models.ManyToManyField(NyRestaurant)
 
     def __str__(self):
-        return self.name
-    
-class NewFood(models.Model):
-    image = models.BinaryField(blank=True, null=True)
-    name = models.CharField(max_length=50)
-    description = models.CharField(max_length=50)
-    price = models.FloatField()
-    undercategory = models.ManyToManyField(NewUnderCategory)
+        return self.Navn
+
+class NytMad(models.Model):
+    Billede = models.BinaryField(blank=True, null=True)
+    Navn = models.CharField(max_length=50)
+    Beskrivelse = models.CharField(max_length=50)
+    Pris = models.FloatField()
+    Underkategori = models.ManyToManyField(NyKategori)
 
     def set_image(self, image):
             binary_data = image.read()
-            self.image = binary_data
+            self.Billede = binary_data
 
     def get_image(self):
-        if self.image:
-            return base64.b64encode(self.image).decode()
+        if self.Billede:
+            return base64.b64encode(self.Billede).decode()
         else:
             return None
 
     def __str__(self):
-        return self.name
+        return self.Navn
+
+# class NewCategory(models.Model):
+#     name = models.CharField(max_length=50)
+#     image = models.BinaryField(blank=True, null=True)
+
+#     def set_image(self, image):
+#         binary_data = image.read()
+#         self.image = binary_data
+    
+#     def get_image(self):
+#         if self.image:
+#             return base64.b64encode(self.image).decode()
+#         else:
+#             return None
+    
+#     def __str__(self):
+#         return self.name
+
+# class NewRestaurant(models.Model):
+#     name = models.CharField(max_length=50)
+#     address = models.CharField(max_length=50)
+#     description = models.CharField(max_length=50)
+#     opening_time = models.TimeField()
+#     closing_time = models.TimeField()
+#     delivery_fee = models.FloatField()
+#     minimum_order = models.FloatField()
+#     categories = models.ManyToManyField(NewCategory)
+#     image = models.BinaryField(blank=True, null=True)
+
+#     def set_image(self, image):
+#         binary_data = image.read()
+#         self.image = binary_data
+
+#     def get_image(self):
+#         if self.image:
+#             return base64.b64encode(self.image).decode()
+#         else:
+#             return None
+        
+#     def __str__(self):
+#         return self.name
+    
+# class NewUnderCategory(models.Model):
+#     name = models.CharField(max_length=50)
+#     category = models.ManyToManyField(NewCategory)
+
+#     def __str__(self):
+#         return self.name
+    
+# class NewFood(models.Model):
+#     image = models.BinaryField(blank=True, null=True)
+#     name = models.CharField(max_length=50)
+#     description = models.CharField(max_length=50)
+#     price = models.FloatField()
+#     undercategory = models.ManyToManyField(NewUnderCategory)
+
+#     def set_image(self, image):
+#             binary_data = image.read()
+#             self.image = binary_data
+
+#     def get_image(self):
+#         if self.image:
+#             return base64.b64encode(self.image).decode()
+#         else:
+#             return None
+
+#     def __str__(self):
+#         return self.name
     

@@ -18,17 +18,17 @@
 {% block categoryblock %}
 <div class="d-flex container-fluid justify-content-center">
     <div class="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-6 row-cols-lg-6 row-cols-xl-6 row-cols-xxl-6 m-0">
-        {% for category in categories %}
+        {% for Kategori in Kategorier %}
         <div class="col mb-5" style="width: 275px;">
             <div class="card menucard shadow-sm" style="border-radius: 5%; overflow: hidden;">
                 <img class="bd-placeholder-img card-img-top" width="100%" height="100%"
-                    src="data:image/jpeg;base64,{{ category.get_image }}" alt="{{ category.name }}"
+                    src="data:image/jpeg;base64,{{ Kategori.get_image }}" alt="{{ Kategori.navn }}"
                     style="object-fit: cover;">
                 <div class="card-body">
                     <div class="m-0">
                         <div class="row m-0 g-0">
                             <div class="col-10">
-                                <h4 class="text-break" style="text-wrap: nowrap; font-size: large;">{{ category.name }}</h4>
+                                <h4 class="text-break" style="text-wrap: nowrap; font-size: large;">{{ Kategori.Navn }}</h4>
                             </div>
                         </div>
                     </div>
@@ -46,19 +46,19 @@
 <div class="album py-5 bg-body-tertiary">
     <div class="d-flex container-fluid justify-content-center">
         <div class="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-5 m-0">
-            {% for restaurant in restaurants %}
+            {% for Restaurant in Restauranter %}
             <div class="col" style="min-width: 300px;">
-                <a class="menucard" href="{% url 'restaurant_detail' name=restaurant.name %}">
+                <a class="menucard" href="{% url 'restaurant_detail' Navn=Restaurant.Navn %}">
                     <div class="card menucard shadow-sm" style="border-radius: 5%; overflow: hidden;">
                         <img class="bd-placeholder-img card-img-top" width="100%" height="200px"
-                            src="data:image/jpeg;base64,{{ restaurant.get_image }}" alt="{{ restaurant.name }}"
+                            src="data:image/jpeg;base64,{{ Restaurant.get_image }}" alt="{{ Restaurant.Navn }}"
                             style="object-fit: cover;">
                         <div class="card-body">
                             <div class="m-0">
                                 <div class="row m-0 g-0">
                                     <div class="col-10">
-                                        <h4 class="text-break" style="text-wrap: nowrap; font-size: large;">{{ restaurant.name }}</h4>
-                                        <p style="color: rgb(85, 84, 90);">{{ restaurant.description }}</p>
+                                        <h4 class="text-break" style="text-wrap: nowrap; font-size: large;">{{ Restaurant.Navn }}</h4>
+                                        <p style="color: rgb(85, 84, 90);">{{ Restaurant.Beskrivelse }}</p>
                                     </div>
                                     <div class="col rounded m-0"
                                         style="background-color: #EBF7FD; height: fit-content; width: 35px;">
@@ -71,10 +71,10 @@
                             <div class="dropdown-divider"></div>
                             <div class="d-flex align-items-center">
                                 <span class="bi-bicycle icon" style="color: #009DE0; font-weight: 500;">
-                                    {{ restaurant.delivery_fee|floatformat }} kr.</span>
+                                    {{ Restaurant.Leveringsgebyr|floatformat }} kr.</span>
                                 <span class="bi-dot icon"></span>
                                 {% for i in "xxxx" %}
-                                {% if forloop.counter <= restaurant.delivery_fee|floatformat|division:15 %} <span
+                                {% if forloop.counter <= Restaurant.Leveringsgebyr|floatformat|division:15 %} <span
                                     class="bi-currency-dollar" style="font-size: small;"></span>
                                     {% else %}
                                     <span class="bi-currency-dollar"
@@ -85,7 +85,6 @@
                         </div>
                     </div>
                 </a>
-
             </div>
             {% endfor %}
         </div>

@@ -10,46 +10,45 @@ from .models import *
 
 # Create your views here.
 def index(request):
-    restaurants = NewRestaurant.objects.all()
-    categories = NewCategory.objects.all()
-    return render(request, 'index.html', {'user': request.user, 'restaurants': restaurants, 'categories': categories})
+    restauranter = NyRestaurant.objects.all()
+    kategorier = NyKategori.objects.all()
+    return render(request, 'index.html', {'user': request.user, 'Restauranter': restauranter, 'Kategorier': kategorier})
 
 def logout_view(request):
     logout(request)
     return redirect('index')
 
-def restaurant_detail(request, name):
-    restaurant = get_object_or_404(NewRestaurant, name=name)
-    categories = NewCategory.objects.filter(newrestaurant=restaurant)
+def restaurant_detail(request, Navn):
+    restauranter = get_object_or_404(NyRestaurant, Navn=Navn)
+    kategorier = NyKategori.objects.filter(nyrestaurant=restauranter)
 
-
-    return render(request, 'restaurant_detail.html', {'restaurant': restaurant, 'categories': categories})
+    return render(request, 'restaurant_detail.html', {'Restauranter': restauranter, 'Kategorier': kategorier})
 
 def manage_view(request):
     # Initialize the forms outside of the if statement
-    restaurant_form = NewRestaurantForm()
-    category_form = NewCategoryForm()
-    food_form = NewFoodForm()
-    undercategory_form = NewUnderCategoryForm()
+    restaurant_form = NyRestaurantForm()
+    category_form = NyKategoriForm()
+    food_form = NytMadForm()
+    undercategory_form = NyUnderkategoriForm()
 
     if request.method == 'POST':
         if 'restaurant_form' in request.POST:
-            restaurant_form = NewRestaurantForm(request.POST, request.FILES)
+            restaurant_form = NyRestaurantForm(request.POST, request.FILES)
             if restaurant_form.is_valid():
                 restaurant_form.save()
                 return redirect('manage')
         elif 'category_form' in request.POST:
-            category_form = NewCategoryForm(request.POST, request.FILES)
+            category_form = NyKategoriForm(request.POST, request.FILES)
             if category_form.is_valid():
                 category_form.save()
                 return redirect('manage')
         elif 'food_form' in request.POST:
-            food_form = NewFoodForm(request.POST, request.FILES)
+            food_form = NytMadForm(request.POST, request.FILES)
             if food_form.is_valid():
                 food_form.save()
                 return redirect('manage')
         elif 'undercategory_form' in request.POST:
-            undercategory_form = NewUnderCategoryForm(request.POST, request.FILES)
+            undercategory_form = NyUnderkategoriForm(request.POST, request.FILES)
             if undercategory_form.is_valid():
                 undercategory_form.save()
                 return redirect('manage')

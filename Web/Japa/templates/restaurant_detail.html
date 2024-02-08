@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
-{% block title %} Burro - {{ restaurant.name }} {% endblock %}
+{% block title %} Burro - {{ Restauranter.Navn }} {% endblock %}
 
 {% block header %}
 <div class="d-flex container-fluid">
     <img class="bd-placeholder-img-top" width="100%" height="200px"
-        src="data:image/jpeg;base64,{{ restaurant.get_image }}" alt="{{ restaurant.name }}" style="object-fit: cover;">
+        src="data:image/jpeg;base64,{{ Restauranter.get_image }}" alt="{{ Restauranter.Navn }}" style="object-fit: cover;">
     </img>
 </div>
 <div class="d-flex container-fluid">
     <div class="row">
-        {% for category in categories %}
-            <h4>{{category.name}}</h4>
+        {% for UnderKategori in restaurant.pre_kategorier %}
+            {{UnderKategori.Navn}}
+        {% endfor %}
+        {% for we in restaurant.pre_undercategories %}
+            {{we.Navn}}
         {% endfor %}
     </div>
-
 </div>
 {% endblock %}
