@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 
+{% load pwa %}
+
 <head>
+    {% progressive_web_app_meta %}
     <title>{% block title %}Standard Title{% endblock %}</title>
     <!-- Load static files -->
     {% load static %}

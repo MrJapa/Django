@@ -16,9 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.urls import include, path
+from django.urls import include, path, re_path
+
+pwa = True
 
 urlpatterns = [
     path('', include('Japa.urls')),
     path('admin/', admin.site.urls),
-]
+    re_path('', include('pwa.urls')),
+] #+ ([path('', include('Japa.urls')),] if not pwa else [path('', include('pwa.urls')),])
