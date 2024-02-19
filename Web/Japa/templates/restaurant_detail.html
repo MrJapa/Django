@@ -2,19 +2,22 @@
 {% block title %} Burro - {{ Restauranter.Navn }} {% endblock %}
 
 {% block header %}
-<div class="d-flex container-fluid">
+<div class="d-flex container-fluid px-0">
     <img class="bd-placeholder-img-top" width="100%" height="200px"
         src="data:image/jpeg;base64,{{ Restauranter.get_image }}" alt="{{ Restauranter.Navn }}" style="object-fit: cover;">
     </img>
 </div>
 <div class="d-flex container-fluid">
-    <div class="row">
-        {% for UnderKategori in restaurant.pre_kategorier %}
-            {{UnderKategori.Navn}}
-        {% endfor %}
-        {% for we in restaurant.pre_undercategories %}
-            {{we.Navn}}
-        {% endfor %}
-    </div>
+    <ul class="nav nav-pills nav-fill">
+        <li class="nav-item">
+            <div class="row">
+                {% for underkategori in Underkategorier %}
+                    <div class="col">
+                        {{ underkategori.Navn }}
+                    </div>
+                {% endfor %}
+            </div>
+        </li>
+      </ul>
 </div>
 {% endblock %}

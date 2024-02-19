@@ -20,12 +20,19 @@ def logout_view(request):
 
 def restaurant_detail(request, Navn):
     restauranter = get_object_or_404(NyRestaurant, Navn=Navn)
-    kategorier = NyKategori.objects.filter(nyrestaurant=restauranter)
+    underkategorier_set = set()
 
-    return render(request, 'restaurant_detail.html', {'Restauranter': restauranter, 'Kategorier': kategorier})
+    # Assuming NyRestaurant has a Many-to-Many relationship with NyKategori, and NyKategori has a Many-to-Many relationship with NyUnderkategori
+    for kategori in restauranter.Kategorier.all():
+        for underkategori in kategori.nyunderkategori_set.all():
+            underkategorier_set.add(underkategori)
+
+    underkategorier = list(underkategorier_set)
+
+    return render(request, 'restaurant_detail.html', {'Restauranter': restauranter, 'Underkategorier': underkategorier})
+
 
 def manage_view(request):
-    # Initialize the forms outside of the if statement
     restaurant_form = NyRestaurantForm()
     category_form = NyKategoriForm()
     food_form = NytMadForm()
@@ -36,7 +43,7 @@ def manage_view(request):
             restaurant_form = NyRestaurantForm(request.POST, request.FILES)
             if restaurant_form.is_valid():
                 restaurant_form.save()
-                return redirect('manage')
+                return redirect('manage')  # Redirecting without passing context
         elif 'category_form' in request.POST:
             category_form = NyKategoriForm(request.POST, request.FILES)
             if category_form.is_valid():
@@ -53,7 +60,12 @@ def manage_view(request):
                 undercategory_form.save()
                 return redirect('manage')
 
-    return render(request, 'manage.html', {'restaurant_form': restaurant_form, 'category_form': category_form, 'food_form': food_form, 'undercategory_form': undercategory_form})
+    # If it's not a POST request or form submission failed, render the template with the forms
+    return render(request, 'manage.html', {'restaurant_form': restaurant_form,
+                                            'category_form': category_form,
+                                            'food_form': food_form,
+                                            'undercategory_form': undercategory_form})
+
 
 def login_view(request):
     if request.method == 'POST':

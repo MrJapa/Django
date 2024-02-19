@@ -83,7 +83,7 @@ class NyRestaurant(models.Model):
 
 class NyUnderkategori(models.Model):
     Navn = models.CharField(max_length=50)
-    Restaurant = models.ManyToManyField(NyRestaurant)
+    Kategori = models.ManyToManyField(NyKategori)
 
     def __str__(self):
         return self.Navn
@@ -91,9 +91,9 @@ class NyUnderkategori(models.Model):
 class NytMad(models.Model):
     Billede = models.BinaryField(blank=True, null=True)
     Navn = models.CharField(max_length=50)
-    Beskrivelse = models.CharField(max_length=50)
+    Beskrivelse = models.CharField(max_length=200)
     Pris = models.FloatField()
-    Underkategori = models.ManyToManyField(NyKategori)
+    Underkategori = models.ManyToManyField(NyUnderkategori)
 
     def set_image(self, image):
             binary_data = image.read()

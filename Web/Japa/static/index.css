@@ -64,3 +64,13 @@ li {
     background-color: #009DE0 !important;
     border-color: #009DE0 !important;
 }
+
+.horizontal-scrollable > .row {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.horizontal-scrollable > .row > .col {
+    display: inline-block;
+    float: none;
+}
