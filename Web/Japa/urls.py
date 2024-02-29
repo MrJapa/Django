@@ -11,4 +11,5 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('manage/', views.manage_view, name='manage'),
     path('Restaurant/<str:Navn>/', views.restaurant_detail, name='restaurant_detail'),
+    path('Restaurant/<str:Navn>/checkout/', views.checkout_view, name='checkout'),
 ]

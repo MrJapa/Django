@@ -76,7 +76,11 @@ class NyRestaurant(models.Model):
             return base64.b64encode(self.Billede).decode()
         else:
             return None
-        
+    
+    def get_id(self):
+        return self.id
+
+
     def __str__(self):
         return self.Navn
     
@@ -104,6 +108,9 @@ class NytMad(models.Model):
             return base64.b64encode(self.Billede).decode()
         else:
             return None
+        
+    def get_id(self):
+        return self.id
 
     def __str__(self):
         return self.Navn

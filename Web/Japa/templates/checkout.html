@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %} Burro - Ordre {% endblock %}
+
+{% block checkout %}
+{% load static %}
+
+<div class="container overflow-hidden text-start w-75">
+    <div class="card" data-pg-collapsed> 
+        <!-- Make sure you're using {{ Restauranter.get_image }} properly -->
+        <img class="card-img-top" width="100%" height="200px" src="data:image/jpeg;base64,{{ Restauranter.get_image }}" alt="Card image cap" style="object-fit: cover;"> 
+        <div class="card-body"> 
+            <h4 class="card-title">{{ Restauranter.Navn }}</h4> 
+            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> 
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <ul id="items"> 
+                <!-- Dynamic content will be added here -->
+            </ul>                  
+            <a href="#" class="btn btn-primary">Bestil</a> 
+        </div>                 
+    </div>
+</div>
+
+<script>
+    // Retrieve items from local storage
+    var items = JSON.parse(localStorage.getItem("items"));
+
+    // Get the ul where we will add the items
+    var itemsList = document.getElementById("items");
+
+    // Check if items is not null
+    if (items && items.length > 0) {
+        // Create a map to store the count of each item
+        var itemCounts = {};
+
+        // Loop through each item in the array to count occurrences and create unique items
+        items.forEach(function(item) {
+            if (!itemCounts[item.MadNavn]) {
+                itemCounts[item.MadNavn] = 0;
+            }
+            itemCounts[item.MadNavn]++;
+        });
+
+        // Loop through each unique item in the map to create list items
+        for (var itemName in itemCounts) {
+            // Get the count of the item
+            var count = itemCounts[itemName];
+
+            // Create li element
+            var li = document.createElement("li");
+
+            // Create title element
+            var title = document.createElement("h5");
+
+            // Append item name with count if count > 1
+            if (count > 1) {
+                title.textContent = itemName + " (" + count + ")";
+            } else {
+                title.textContent = itemName;
+            }
+
+            // Get the item associated with the itemName
+            var item = items.find(function(item) {
+                return item.MadNavn === itemName;
+            });
+
+            // Create img element
+            var img = document.createElement("img");
+            img.src = "data:image/jpeg;base64," + item.MadBillede;
+            img.className = "w-25";
+            img.alt = "Item Image";
+
+            // Create text node for description
+            var textNode = document.createTextNode(item.MadBeskrivelse);
+
+            // Append title, img, and textNode to li
+            li.appendChild(title);
+            li.appendChild(img);
+            li.appendChild(textNode);
+
+            // Append li to itemsList
+            itemsList.appendChild(li);
+        }
+    } else {
+        console.log("No items in local storage or items is empty.");
+    }
+</script>
+
+{% endblock %}

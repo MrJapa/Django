@@ -21,6 +21,8 @@ def logout_view(request):
 def restaurant_detail(request, Navn):
     restauranter = get_object_or_404(NyRestaurant, Navn=Navn)
     underkategorier_set = set()
+    nytmad_set = set()
+
 
     # Assuming NyRestaurant has a Many-to-Many relationship with NyKategori, and NyKategori has a Many-to-Many relationship with NyUnderkategori
     for kategori in restauranter.Kategorier.all():
@@ -29,7 +31,33 @@ def restaurant_detail(request, Navn):
 
     underkategorier = list(underkategorier_set)
 
-    return render(request, 'restaurant_detail.html', {'Restauranter': restauranter, 'Underkategorier': underkategorier})
+    for underkategori in underkategorier:
+        for mad in underkategori.nytmad_set.all():
+            nytmad_set.add(mad)
+
+    nytmad = list(nytmad_set)
+
+    return render(request, 'restaurant_detail.html', {'Restauranter': restauranter, 'Underkategorier': underkategorier, 'NytMad': nytmad})
+
+def checkout_view(request, Navn):
+    restauranter = get_object_or_404(NyRestaurant, Navn=Navn)
+    underkategorier_set = set()
+    nytmad_set = set()
+
+
+    # Assuming NyRestaurant has a Many-to-Many relationship with NyKategori, and NyKategori has a Many-to-Many relationship with NyUnderkategori
+    for kategori in restauranter.Kategorier.all():
+        for underkategori in kategori.nyunderkategori_set.all():
+            underkategorier_set.add(underkategori)
+
+    underkategorier = list(underkategorier_set)
+
+    for underkategori in underkategorier:
+        for mad in underkategori.nytmad_set.all():
+            nytmad_set.add(mad)
+
+    nytmad = list(nytmad_set)
+    return render(request, 'checkout.html', {'Restauranter': restauranter, 'Underkategorier': underkategorier, 'NytMad': nytmad})
 
 
 def manage_view(request):

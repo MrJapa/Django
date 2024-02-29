@@ -19,7 +19,7 @@
     
 </head>
 
-<body class="bg-light-subtle">
+<body class="bg-light-subtle" style="background-color: #FBFBFB;">
     {% include 'components/navbar.html' %}
     {% block login %}
     {% endblock %}
@@ -33,7 +33,8 @@
     {% endblock %}
     {% block header %}
     {% endblock %}
-    {% include 'components/footer.html' %}
+    {% block checkout %}
+    {% endblock %}
 </body>
 
 
