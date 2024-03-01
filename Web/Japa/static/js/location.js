@@ -13,7 +13,7 @@ function showPosition(position) {
             let road = data.address.road;
             let postalCode = data.address.postcode;
             let city = data.address.city;
-            document.getElementById("location").innerHTML = `${road}, ${postalCode}, ${city}`;
+            document.getElementById("location").innerHTML = `${road}, ${postalCode}, ${city},`;
         })
         .catch(error => console.error(error));
 }

@@ -7,12 +7,22 @@ from datetime import timedelta
 from .models import CustomUser
 from .forms import *
 from .models import *
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.utils import timezone
 
 # Create your views here.
 def index(request):
     restauranter = NyRestaurant.objects.all()
     kategorier = NyKategori.objects.all()
     return render(request, 'index.html', {'user': request.user, 'Restauranter': restauranter, 'Kategorier': kategorier})
+
+@require_POST
+def create_bestilling(request):
+    if request.method == 'POST':
+        data = request.POST
+
+
 
 def logout_view(request):
     logout(request)
@@ -57,7 +67,7 @@ def checkout_view(request, Navn):
             nytmad_set.add(mad)
 
     nytmad = list(nytmad_set)
-    return render(request, 'checkout.html', {'Restauranter': restauranter, 'Underkategorier': underkategorier, 'NytMad': nytmad})
+    return render(request, 'checkout.html', {'user': request.user, 'Restauranter': restauranter, 'Underkategorier': underkategorier, 'NytMad': nytmad})
 
 
 def manage_view(request):

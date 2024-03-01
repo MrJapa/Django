@@ -114,6 +114,29 @@ class NytMad(models.Model):
 
     def __str__(self):
         return self.Navn
+    
+
+class NyBestilling(models.Model):
+    Kunde = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    Restaurant = models.ForeignKey(NyRestaurant, on_delete=models.CASCADE)
+    Mad = models.ManyToManyField(NytMad)
+    Leveringsadresse = models.TextField()
+    Leveringsadresse_type = models.CharField(max_length=20, choices=[('house', 'House'), ('apartment', 'Apartment'), ('office', 'Office'), ('other', 'Other')], blank=True, null=True)
+    Dørnummer = models.CharField(max_length=10, blank=True, null=True)
+    Leveringsgebyr = models.FloatField()
+    Total_pris = models.FloatField()
+    Leverings_tid = models.DateTimeField()
+    Bestillings_tid = models.DateTimeField(auto_now_add=True)
+    Leveret = models.BooleanField(default=False)
+    Afhentet = models.BooleanField(default=False)
+    Annulleret = models.BooleanField(default=False)
+    Accepteret = models.BooleanField(default=False)
+
+    def get_id(self):
+        return self.id
+
+    def __str__(self):
+        return self.Kunde.email + " " + self.Restaurant.Navn + " " + str(self.Bestillings_tid)
 
 # class NewCategory(models.Model):
 #     name = models.CharField(max_length=50)

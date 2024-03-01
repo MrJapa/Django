@@ -4,6 +4,9 @@
 {% block header %}
 {% load static %}
 <script src="{% static 'js/localStorage.js' %}"></script>
+<script src="{% static 'js/location.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <div class="d-flex container-fluid px-0">
     <img class="bd-placeholder-img-top" width="100%" height="200px"
@@ -20,6 +23,11 @@
                     {{ underkategori.Navn }}
                 </div>
                 {% endfor %}
+                <div class="col">
+                    <a class="btn btn-primary" type="button" href="{% url 'checkout' Navn=Restauranter.Navn %}">
+                        Kurv
+                    </a>
+                </div>
             </div>
         </li>
     </ul>
@@ -64,7 +72,7 @@
                         {{nytmad.Beskrivelse}}
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" onclick="addToLocalStorage('{{Restauranter.get_id}}', '{{Restauranter.get_image}}', '{{Restauranter.Navn|escapejs}}', '{{nytmad.get_id}}', '{{nytmad.Navn|escapejs}}', '{{nytmad.Pris}}', '{{nytmad.Beskrivelse|escapejs}}', '{{nytmad.Billede|escapejs}}')">Tilføj</button>
+                        <button id="modalClose{{nytmad.id}}" class="btn btn-primary" onclick="addToLocalStorage('{{Restauranter.get_id}}', '{{Restauranter.get_image}}', '{{Restauranter.Navn|escapejs}}', '{{nytmad.get_id}}', '{{nytmad.Navn|escapejs}}', '{{nytmad.Pris}}', '{{nytmad.Beskrivelse|escapejs}}', '{{nytmad.get_image|escapejs}}')">Tilføj</button>
                     </div>
                 </div>
             </div>
@@ -72,11 +80,12 @@
         {% endif %}
         {% endfor %}
     </div>
-    <div class="nav-item">
-        <a class="btn btn-outline-success" type="button" href="{% url 'checkout' Navn=Restauranter.Navn %}">
-            Kurv
-        </a>
-    </div>
 </div>
+<script>
+    $('[id^="modalClose"]').on('click', function() {
+        var id = $(this).attr('id').replace('modalClose', '');
+        $('#myModal' + id).modal('hide');
+    });
+</script>
 {% endfor %}
 {% endblock %}
